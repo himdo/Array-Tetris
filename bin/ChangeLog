@@ -1,0 +1,17 @@
+ChangeLog
+
+0.0.1
++ summoning pieces
++ random pieces
++ resetting position when hitting the bottom of map
++ moving left and right
++ remembering where the last piece died at
++ gui
+
+/ resetting solidified pieces when a new piece becomes solidified 
+
+key
++ = added
+- = removed
+* = changed
+/ = bug
