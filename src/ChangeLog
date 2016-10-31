@@ -1,4 +1,9 @@
 ChangeLog
+0.0.2
++ collision from the bottom
+* piece spelling errors
+. the resetting solidifing pieces
+/ can slid into a piece
 
 0.0.1
 + summoning pieces
@@ -15,3 +20,4 @@ key
 - = removed
 * = changed
 / = bug
+. = fixed

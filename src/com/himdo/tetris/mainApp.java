@@ -14,7 +14,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class mainApp {
+public class MainApp {
 
 	private JFrame frame;
 
@@ -25,7 +25,7 @@ public class mainApp {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mainApp window = new mainApp();
+					MainApp window = new MainApp();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -37,7 +37,7 @@ public class mainApp {
 	/**
 	 * Create the application.
 	 */
-	public mainApp() {
+	public MainApp() {
 		initialize();
 	}
 
@@ -56,7 +56,7 @@ public class mainApp {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		myPanel GameBoardPanel = new myPanel();
+		MyPanel GameBoardPanel = new MyPanel();
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -81,7 +81,7 @@ public class mainApp {
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		
-		updateThread update = new updateThread("update",GameBoardPanel);
+		UpdateThread update = new UpdateThread("update",GameBoardPanel);
 		update.start();
 		
 		
@@ -89,12 +89,12 @@ public class mainApp {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				if(arg0.getKeyChar()=='a'){
-					if(varSizes.currentX>0)
-						varSizes.currentX--;
+					if(VarSizes.currentX>0)
+						VarSizes.currentX--;
 				}
 				if(arg0.getKeyChar()=='d'){
-					if(varSizes.currentX+Peices.getPeiceSize(updateThread.piece)[0]<varSizes.sizeX)
-						varSizes.currentX++;
+					if(VarSizes.currentX+Pieces.getPieceSize(UpdateThread.piece)[0]<VarSizes.sizeX)
+						VarSizes.currentX++;
 				}
 			}
 		});

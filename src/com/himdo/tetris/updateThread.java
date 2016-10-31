@@ -1,29 +1,40 @@
 package com.himdo.tetris;
 
+import java.lang.reflect.Array;
 
-public class updateThread extends Thread {
+public class UpdateThread extends Thread {
 	
 	private Thread t;
 	private String threadName;
-	private myPanel board;
+	private MyPanel board;
 	
 	public static int piece;
-	public updateThread(String name, myPanel gameBoardPanel) {
+	public UpdateThread(String name, MyPanel gameBoardPanel) {
 		threadName = name;
 		board = gameBoardPanel;
 	}
 	public void run() {
 		while(true){
 			piece = (int) (Math.random()*7);
-			varSizes.currentY=0;
-			varSizes.currentX=varSizes.sizeX/2;
+			VarSizes.currentY=0;
+			VarSizes.currentX=VarSizes.sizeX/2;
+			int[][] tempBoard = SoildTetrisPieces.getSolidPieces();
 			while(true){
 				try {
 					
-					if(varSizes.currentY+Peices.getPeiceSize(piece)[1]!=varSizes.sizeY){
-						varSizes.currentY+=1;
-						//varSizes.getGameBoard()+=Peices.summonPeice(piece);
-						varSizes.setGameBoard(Peices.summonPeice(piece,1));
+					if(VarSizes.currentY+Pieces.getPieceSize(piece)[1]!=VarSizes.sizeY){
+						//check if below the piece is solid
+						
+						if((SoildTetrisPieces.solidPieces[Pieces.getPieceBounds(piece)[0][0]] [Pieces.getPieceBounds(piece)[0][1]+1]==0))
+							if(SoildTetrisPieces.solidPieces[Pieces.getPieceBounds(piece)[1][0]] [Pieces.getPieceBounds(piece)[1][1]+1]==0)
+								if(SoildTetrisPieces.solidPieces[Pieces.getPieceBounds(piece)[2][0]] [Pieces.getPieceBounds(piece)[2][1]+1]==0)
+									if(SoildTetrisPieces.solidPieces[Pieces.getPieceBounds(piece)[3][0]] [Pieces.getPieceBounds(piece)[3][1]+1]==0){
+										VarSizes.currentY+=1;
+										VarSizes.setGameBoard(Pieces.summonPiece(piece,1));
+									}else break;
+								else break;
+							else break;
+						else break;
 					}else break;
 					board.repaint();
 					Thread.sleep(100);
@@ -31,9 +42,14 @@ public class updateThread extends Thread {
 					e.printStackTrace();
 				}
 			}
-			int[][] tempBoard = soildTetrisPeices.getSolidPieces();
-			tempBoard[varSizes.currentX][varSizes.currentY]=2;
-			soildTetrisPeices.setSolidPieces(Peices.summonPeice(piece,2));
+			
+			tempBoard[Pieces.getPieceBounds(piece)[0][0]] [Pieces.getPieceBounds(piece)[0][1]]=2;
+			tempBoard[Pieces.getPieceBounds(piece)[1][0]] [Pieces.getPieceBounds(piece)[1][1]]=2;
+			tempBoard[Pieces.getPieceBounds(piece)[2][0]] [Pieces.getPieceBounds(piece)[2][1]]=2;
+			tempBoard[Pieces.getPieceBounds(piece)[3][0]] [Pieces.getPieceBounds(piece)[3][1]]=2;
+			
+		
+			SoildTetrisPieces.setSolidPieces(tempBoard);
 			board.repaint();
 		}
 	}
