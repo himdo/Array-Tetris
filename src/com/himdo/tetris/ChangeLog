@@ -1,4 +1,10 @@
 ChangeLog
+0.0.3
++ rotation
++ a timer
+* fixed bug about solidifing pieces
+/ if rotating next to a wall and the piece is bigger then it exceds the bounds and crashes
+
 0.0.2
 + collision from the bottom
 * piece spelling errors

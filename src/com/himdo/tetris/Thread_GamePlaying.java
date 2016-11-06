@@ -1,27 +1,26 @@
 package com.himdo.tetris;
 
-import java.lang.reflect.Array;
-
-public class UpdateThread extends Thread {
+@SuppressWarnings("unused")
+public class Thread_GamePlaying extends Thread {
 	
 	private Thread t;
 	private String threadName;
 	private MyPanel board;
 	
 	public static int piece;
-	public UpdateThread(String name, MyPanel gameBoardPanel) {
+	public Thread_GamePlaying(String name, MyPanel gameBoardPanel) {
 		threadName = name;
 		board = gameBoardPanel;
 	}
 	public void run() {
 		while(true){
+			
 			piece = (int) (Math.random()*7);
 			VarSizes.currentY=0;
-			VarSizes.currentX=VarSizes.sizeX/2;
+			VarSizes.currentX=VarSizes.sizeX/2-1;
 			int[][] tempBoard = SoildTetrisPieces.getSolidPieces();
 			while(true){
 				try {
-					
 					if(VarSizes.currentY+Pieces.getPieceSize(piece)[1]!=VarSizes.sizeY){
 						//check if below the piece is solid
 						
@@ -36,13 +35,18 @@ public class UpdateThread extends Thread {
 							else break;
 						else break;
 					}else break;
-					board.repaint();
-					Thread.sleep(100);
+					//board.repaint();
+					Thread.sleep(250);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			tempBoard[Pieces.getPieceBounds(piece)[0][0]] [Pieces.getPieceBounds(piece)[0][1]]=2;
 			tempBoard[Pieces.getPieceBounds(piece)[1][0]] [Pieces.getPieceBounds(piece)[1][1]]=2;
 			tempBoard[Pieces.getPieceBounds(piece)[2][0]] [Pieces.getPieceBounds(piece)[2][1]]=2;
@@ -50,7 +54,12 @@ public class UpdateThread extends Thread {
 			
 		
 			SoildTetrisPieces.setSolidPieces(tempBoard);
-			board.repaint();
+			
+			Pieces.removeRow();
+			
+			Pieces.RotateReset();
+			
+			//board.repaint();
 		}
 	}
 }

@@ -2,9 +2,11 @@ package com.himdo.tetris;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Panel;
 
-public class MyPanel extends Panel {
+import javax.swing.JComponent;
+
+@SuppressWarnings("serial")
+public class MyPanel extends JComponent{//Panel {
 	
 	int width = 0;
 	int height = 0;
@@ -43,7 +45,7 @@ public class MyPanel extends Panel {
 		
 	}
 	
-	private void paintPieces(Graphics g) {
+	private void paintSoildPieces(Graphics g) {
 		g.setColor(Color.GREEN);
 		for(int x=0;x<VarSizes.sizeX;x++){
 			for(int y = 0; y<VarSizes.sizeY;y++){
@@ -61,7 +63,7 @@ public class MyPanel extends Panel {
 		height = (int) getSize().getHeight()-1;
 		paintBoard(g);
 		paintSpot(g);
-		paintPieces(g);
+		paintSoildPieces(g);
 		super.paint(g);
 	}
 	
