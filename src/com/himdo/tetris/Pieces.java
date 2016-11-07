@@ -1,8 +1,13 @@
 package com.himdo.tetris;
 
+import javax.swing.JLabel;
+
 public class Pieces {
 	
 	private static int Rotated=0;
+	public static JLabel scoreText;
+	
+	private static int score = 0;
 	
 	public static int getRotatedValue(){
 		return Rotated;
@@ -40,6 +45,10 @@ public class Pieces {
 					for(int row = 0; row< VarSizes.sizeX;row++){
 						board[row][y]=0;
 					}
+					
+					score += 100;
+					scoreText.setText(score+"");
+					
 					//pull the pieces down
 					for(int rowY = y;rowY!=0;rowY--){
 						for(int rowX=0;rowX<VarSizes.sizeX;rowX++){
@@ -101,7 +110,7 @@ public class Pieces {
 					piece[3][0]=VarSizes.currentX+2;	piece[3][1]=VarSizes.currentY+1;
 				}
 				return piece;
-			case 3://"J"
+			case 3://"L"
 				if(Rotated==0){
 					piece[0][0]=VarSizes.currentX;	piece[0][1]=VarSizes.currentY;
 					piece[1][0]=VarSizes.currentX;	piece[1][1]=VarSizes.currentY+1;
@@ -124,7 +133,7 @@ public class Pieces {
 					piece[3][0]=VarSizes.currentX+2;	piece[3][1]=VarSizes.currentY;
 				}
 				return piece;
-			case 4://"L"
+			case 4://"J"
 				if(Rotated==0){
 					piece[0][0]=VarSizes.currentX+1;	piece[0][1]=VarSizes.currentY;
 					piece[1][0]=VarSizes.currentX+1;	piece[1][1]=VarSizes.currentY+1;
@@ -188,8 +197,8 @@ public class Pieces {
 		//square = 0
 		//line = 1
 		//"t" = 2
-		//"j" = 3
-		//"L" = 4
+		//"L" = 3
+		//"J" = 4
 		//"S" = 5
 		//"Z" = 6
 		int [][] piece = new int[VarSizes.sizeX][VarSizes.sizeY];
@@ -215,7 +224,7 @@ public class Pieces {
 					piece[VarSizes.currentX][VarSizes.currentY+1]=piece[VarSizes.currentX+1][VarSizes.currentY+2]=piece[VarSizes.currentX+1][VarSizes.currentY+1]=piece[VarSizes.currentX+2][VarSizes.currentY+1]=setter;
 				}
 				return piece;
-			case 3://"J"
+			case 3://"L"
 				if(Rotated==0){
 					piece[VarSizes.currentX][VarSizes.currentY]=piece[VarSizes.currentX][VarSizes.currentY+1]=piece[VarSizes.currentX][VarSizes.currentY+2]=piece[VarSizes.currentX+1][VarSizes.currentY+2]=setter;
 				}else if(Rotated==1){
@@ -227,7 +236,7 @@ public class Pieces {
 				}
 				
 				return piece;
-			case 4://"L"
+			case 4://"J"
 				if(Rotated==0){
 					piece[VarSizes.currentX+1][VarSizes.currentY]=piece[VarSizes.currentX+1][VarSizes.currentY+1]=piece[VarSizes.currentX+1][VarSizes.currentY+2]=piece[VarSizes.currentX][VarSizes.currentY+2]=setter;
 				}else if(Rotated==1){
@@ -261,6 +270,60 @@ public class Pieces {
 				
 			}
 		return null;
+	}
+
+	public static int[][] getPieceShadow(int number, int rotation,Boolean useDefaultRotation){
+		if(useDefaultRotation)
+			rotation=Rotated;
+
+		int [][] piece = new int[4][2];
+		
+		switch(number){
+			case 0:
+				piece[0][0]= 1; piece[0][1]=1;
+				piece[1][0]= 1; piece[1][1]=2;
+				piece[2][0]= 2; piece[2][1]=1;
+				piece[3][0]= 2; piece[3][1]=2;
+				return piece;
+			case 1:
+				piece[0][0]= 1; piece[0][1]=1;
+				piece[1][0]= 1; piece[1][1]=2;
+				piece[2][0]= 1; piece[2][1]=3;
+				piece[3][0]= 1; piece[3][1]=4;
+				return piece;
+			case 2:
+				piece[0][0]= 2; piece[0][1]=1;
+				piece[1][0]= 1; piece[1][1]=2;
+				piece[2][0]= 2; piece[2][1]=2;
+				piece[3][0]= 2; piece[3][1]=3;
+				return piece;
+			case 3:
+				piece[0][0]= 1; piece[0][1]=1;
+				piece[1][0]= 1; piece[1][1]=2;
+				piece[2][0]= 1; piece[2][1]=3;
+				piece[3][0]= 2; piece[3][1]=3;
+				return piece;
+			case 4:
+				piece[0][0]= 1; piece[0][1]=3;
+				piece[1][0]= 2; piece[1][1]=1;
+				piece[2][0]= 2; piece[2][1]=2;
+				piece[3][0]= 2; piece[3][1]=3;
+				return piece;
+			case 5:
+				piece[0][0]= 1; piece[0][1]=2;
+				piece[1][0]= 1; piece[1][1]=3;
+				piece[2][0]= 2; piece[2][1]=1;
+				piece[3][0]= 2; piece[3][1]=2;
+				return piece;
+			case 6:
+				piece[0][0]= 1; piece[0][1]=1;
+				piece[1][0]= 1; piece[1][1]=2;
+				piece[2][0]= 2; piece[2][1]=2;
+				piece[3][0]= 2; piece[3][1]=3;
+				return piece;
+	}
+		return null;
+		
 	}
 	
 	public static int[] getPieceSize(int number){

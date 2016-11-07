@@ -5,8 +5,8 @@ Controls:
 
 'a' move left
 'd' move right
-'q' rotate left. NOT YET IMPLEMENTED
-'e' rotate right. NOT YET IMPLEMENTED
-'s' fall faster. NOT YET IMPLEMENTED
+'q' rotate left. 
+'e' rotate right. 
+'s' fall 5 times faster. 
 'SPACE' instantly fall. NOT YET IMPLEMENTED
 'ESC' pause game. NOT YET IMPLEMENTED

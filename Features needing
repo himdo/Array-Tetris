@@ -1,11 +1,11 @@
 Features to add
 [+] moving left and right(might need to fix when tabbing back to app)
 [+] moving down
-[ ] rotating
+[+] rotating
 [-] detecting collisions (detects bottom not sides)
 [ ] having space button work
-[ ] having 's' key speed up falling
-[ ] score
+[+] having 's' key speed up falling
+[+] score
 [+] deleting row
 [+] timer
 [ ] multiple levels adding difficulty

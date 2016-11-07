@@ -1,12 +1,15 @@
 package com.himdo.tetris;
 
 import java.awt.EventQueue;
+import java.awt.RenderingHints.Key;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.KeyAdapter;
@@ -69,16 +72,17 @@ public class MainApp {
 		mnSettings.add(mntmChangeLog);
 		
 		MyPanel GameBoardPanel = new MyPanel();
-		//GameBoardPanel.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("A"), "left");
-		//GameBoardPanel.getActionMap().put("left", MovingPieces.MoveLeft());//MovingPieces.MoveLeft());
 		
-		JPanel FuturePiece = new JPanel();
+		FuturePiecePanel FuturePiece = new FuturePiecePanel();
 		FuturePiece.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		
 		JLabel lblTimer = new JLabel("00:00");
 		lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JLabel lblScore = new JLabel("Score:");
+		JLabel lblScoreText = new JLabel("Score:");
+		
+		JLabel lblScore = new JLabel("0");
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -89,19 +93,24 @@ public class MainApp {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(lblTimer, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(FuturePiece, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE)
+							.addComponent(FuturePiece, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblScore, GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)))
+							.addComponent(lblScoreText)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblScore, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lblScore, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblTimer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(FuturePiece, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblScoreText, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblScore, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(lblTimer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(FuturePiece, GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE)))
 					.addGap(10)
 					.addComponent(GameBoardPanel, GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
 					.addGap(10))
@@ -112,11 +121,14 @@ public class MainApp {
 		Thread_GamePlaying update = new Thread_GamePlaying("update",GameBoardPanel);
 		update.start();
 		
-		Thread_Repaint paint = new Thread_Repaint(GameBoardPanel);
+		Thread_Repaint paint = new Thread_Repaint(GameBoardPanel,FuturePiece);
 		paint.start();
 		
 		Thread_Timer timer = new Thread_Timer(lblTimer); 
 		timer.start();
+		
+		Pieces.scoreText = lblScore;
+		
 		frame.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
@@ -134,6 +146,22 @@ public class MainApp {
 				if(arg0.getKeyChar()=='e'){
 					Pieces.RotateRight();
 				}
+				if(arg0.getKeyChar()=='s'){
+					VarSizes.sleepTime=250/5;
+				}
+				/*if(arg0.getKeyChar()==' '){
+					VarSizes.sleepTime=0;
+				}*/
+			}
+			
+			public void keyReleased(KeyEvent arg0){
+				if(arg0.getKeyChar()=='s'){
+					VarSizes.sleepTime=250;
+				}
+				/*if(arg0.getKeyChar()== ' '){
+					VarSizes.sleepTime=250;
+				}*/
+
 			}
 		});
 		

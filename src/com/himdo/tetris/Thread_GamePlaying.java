@@ -8,14 +8,19 @@ public class Thread_GamePlaying extends Thread {
 	private MyPanel board;
 	
 	public static int piece;
+	public static int nextPiece;
 	public Thread_GamePlaying(String name, MyPanel gameBoardPanel) {
 		threadName = name;
 		board = gameBoardPanel;
 	}
 	public void run() {
+
+		piece = (int) (Math.random()*7);
+		
 		while(true){
+
+			nextPiece = (int) (Math.random()*7);
 			
-			piece = (int) (Math.random()*7);
 			VarSizes.currentY=0;
 			VarSizes.currentX=VarSizes.sizeX/2-1;
 			int[][] tempBoard = SoildTetrisPieces.getSolidPieces();
@@ -35,8 +40,7 @@ public class Thread_GamePlaying extends Thread {
 							else break;
 						else break;
 					}else break;
-					//board.repaint();
-					Thread.sleep(250);
+					Thread.sleep(VarSizes.sleepTime);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -44,7 +48,6 @@ public class Thread_GamePlaying extends Thread {
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			tempBoard[Pieces.getPieceBounds(piece)[0][0]] [Pieces.getPieceBounds(piece)[0][1]]=2;
@@ -58,6 +61,8 @@ public class Thread_GamePlaying extends Thread {
 			Pieces.removeRow();
 			
 			Pieces.RotateReset();
+			
+			piece = nextPiece;
 			
 			//board.repaint();
 		}

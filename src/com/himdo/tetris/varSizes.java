@@ -7,6 +7,7 @@ public class VarSizes {
 	public static int currentY=0;
 	public static int [][] gameBoard = new int[sizeX][sizeY];
 	
+	public static int sleepTime=250;
 	public static void setGameBoard(int[][] gameBoard) {
 		VarSizes.gameBoard = gameBoard;
 	}
